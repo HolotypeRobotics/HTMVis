@@ -1,0 +1,9 @@
+{network: [
+    {addRegion: {name: "encoder1", type: "ScalarEncoderRegion", params: {"size": 50, "w": 2, "minValue": 0, "maxValue": 100, "periodic": false}}},
+    {addRegion: {name: "encoder2", type: "ScalarEncoderRegion", params: {"size": 50, "w": 2, "minValue": 0, "maxValue": 100, "periodic": false}}},
+    {addRegion: {name: "sp", type: "SPRegion", params: {columnCount: 50, learningMode: 1}}},
+    {addRegion: {name: "tm", type: "TMRegion", params: {numberOfCols: 50, cellsPerColumn: 5, inputWidth: 50, learningMode: true, predictedSegmentDecrement: .1, activationThreshold: 1, minThreshold: 1 }}},
+    {addLink:   {src: "encoder1.encoded", dest: "sp.bottomUpIn"}},
+    {addLink:   {src: "encoder2.encoded", dest: "sp.bottomUpIn"}},
+    {addLink:   {src: "sp.bottomUpOut", dest: "tm.bottomUpIn"}}
+]}
