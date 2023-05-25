@@ -101,14 +101,12 @@ class Vis:
         if self.tmRegion != None:
             viewport_y += viewport_height
             # Draw the TMRegion output as a matrix with colors representing cell state
-            active_cells_sdr = self.tmRegion.getOutputArray("activeCells").getSDR().dense
-            predicted_active_cells_sdr = self.tmRegion.getOutputArray("predictedActiveCells").getSDR().dense
             predicted_cells_sdr = self.tmRegion.getOutputArray("predictiveCells").getSDR().dense
+            active_cells_sdr = self.tmRegion.getOutputArray("activeCells").getSDR().dense.reshape(predicted_cells_sdr.shape)
+            predicted_active_cells_sdr = self.tmRegion.getOutputArray("predictedActiveCells").getSDR().dense.reshape(predicted_cells_sdr.shape)
             num_points_tall = predicted_cells_sdr.shape[1]
-            # print(active_cells_sdr)
+            
             # Transpose the arrays
-            active_cells_sdr = np.transpose(active_cells_sdr)
-            predicted_active_cells_sdr = np.transpose(predicted_active_cells_sdr)
             glViewport(0, int(viewport_y), viewport_width, int(predicted_cells_sdr.shape[1] * pixel_size * (1 + self.grid_line_width)))
             glBegin(GL_POINTS)
             for i in range(predicted_cells_sdr.shape[0]):
