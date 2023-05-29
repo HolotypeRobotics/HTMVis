@@ -4,6 +4,7 @@ from htm.bindings.algorithms import SpatialPooler, TemporalMemory
 from htm.bindings.encoders import ScalarEncoder
 from htm.bindings.engine_internal import Network, Region
 import numpy as np
+import time
 from Vis import Vis
 
 
@@ -29,17 +30,32 @@ def main():
         elif region_type == 'TMRegion':
             tmRegion = region
         print(region.getParameters())
+    input()
+
+    # Instantiate and start the visualization 
     vis  = Vis()
     vis.run()
+
+    # Calculate the value
     value = 0
     while True:
+        if value >= 11:
+            value = 0
+        print("Value:",value)
+
+        # Set the values by passing them into the encoders
         for enc in encoders:
             enc.setParameterReal64("sensedValue", value)
         network.run(1)
+
+        # Pass the state to the visualization
         vis.setRegionData(encoders,spRegion, tmRegion)
-        if value >= 100:
-            value = 0
+
+        # Increment the value
         value+=1
+
+        # Pause
+        # time.sleep(.2)
         input()
 if __name__ == '__main__':
     main()

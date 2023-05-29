@@ -1,9 +1,49 @@
 {network: [
-    {addRegion: {name: "encoder1", type: "ScalarEncoderRegion", params: {"size": 50, "w": 2, "minValue": 0, "maxValue": 100, "periodic": false}}},
-    {addRegion: {name: "encoder2", type: "ScalarEncoderRegion", params: {"size": 50, "w": 2, "minValue": 0, "maxValue": 100, "periodic": false}}},
-    {addRegion: {name: "sp", type: "SPRegion", params: {columnCount: 50, learningMode: 1}}},
-    {addRegion: {name: "tm", type: "TMRegion", params: {numberOfCols: 50, cellsPerColumn: 5, inputWidth: 50, learningMode: true, predictedSegmentDecrement: .1, activationThreshold: 1, minThreshold: 1 }}},
+
+    {addRegion: {name: "encoder1", type: "ScalarEncoderRegion", params: {"size": 12, "w": 2, "minValue": 0, "maxValue": 10, "periodic": true}}},
+
+
+    {addRegion: {name: "sp", type: "SPRegion", params: {
+        columnCount: 20,
+        potentialRadius: 1,
+        potentialPct: 1,
+        globalInhibition: true,
+        localAreaDensity: 0,
+        numActiveColumnsPerInhArea: 3,
+        stimulusThreshold: 0,
+        synPermInactiveDec: 0.008000,
+        synPermActiveInc: 0.050000,
+        synPermConnected: 0.100000,
+        minPctOverlapDutyCycles: 0.001000,
+        dutyCyclePeriod: 1000,
+        boostStrength: 0.000000,
+        seed: 25,
+        spVerbosity: 0,
+        wrapAround: false,
+        learningMode: 1,
+        spatialImp: null
+    }}},
+
+    {addRegion: {name: "tm", type: "TMRegion", params: {
+        numberOfCols: 20,
+        cellsPerColumn: 5,
+        activationThreshold: 1,
+        initialPermanence: 0.21,
+        connectedPermanence: 0.500000,
+        minThreshold: 1,
+        maxNewSynapseCount: 1,
+        permanenceIncrement: 0.100000,
+        permanenceDecrement: 0.100000,
+        predictedSegmentDecrement: 0.100000,
+        maxSegmentsPerCell: 255,
+        maxSynapsesPerSegment: 255,
+        seed: 42,
+        learningMode: true,
+        activeOutputCount: 3,
+        anomaly: -1.000000,
+        orColumnOutputs: false
+    }}},
+
     {addLink:   {src: "encoder1.encoded", dest: "sp.bottomUpIn"}},
-    {addLink:   {src: "encoder2.encoded", dest: "sp.bottomUpIn"}},
     {addLink:   {src: "sp.bottomUpOut", dest: "tm.bottomUpIn"}}
 ]}
